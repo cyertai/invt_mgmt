@@ -1,0 +1,87 @@
+#!/usr/bin/python
+"""
+NOTE: missing shebang line will cause mouse-grab
+"""
+
+import os
+import sys
+import pdb
+import time
+import yaml
+
+import numpy as np
+import cv2
+
+import rospy
+from sensor_msgs.msg import CameraInfo, Image
+from cv_bridge import CvBridge
+import camera_info_manager as cim
+from std_msgs.msg import String
+
+cvRos = CvBridge()
+
+
+class rpiCameraPublisher(object):
+
+    def __init__(self, cam_name='head_camera', cam_id=3, calib_url='file:///home/nike/.ros/camera_info/picam_global.yaml'):
+        print('hello')
+        node_name = rospy.get_param('/camera_frame')
+        cam_id = int(rospy.get_param('/camera_index')[-1])
+        cam_name = node_name
+        ###########
+        self.STRING_PUBLISHER = rospy.Publisher('/%s/my_string' % node_name, String, queue_size=1)
+        self.IMAGE_PUBLISHER = rospy.Publisher('/%s/image_raw' % node_name, Image, queue_size=1)
+        self.INFO_PUBLISHER = rospy.Publisher('/%s/camera_info' % node_name, CameraInfo, queue_size=1)
+        ###########
+        rospy.init_node('%s' % node_name)
+
+        self.cam_name = node_name
+        self.frame_id = node_name
+        self.cam_id = cam_id
+        self.calib_url = calib_url
+        self.cam_capture = None
+        self.cam_info = cim.CameraInfoManager(cname=self.cam_name, url=self.calib_url)
+        self.cam_info.loadCameraInfo()
+        # clean release
+        rospy.on_shutdown(self.cleanRelease)
+        # publisher
+        self.publishCameraImage()
+
+        rospy.spin()
+
+    def publishCameraImage(self):
+        self.cam_capture = cv2.VideoCapture(self.cam_id)
+        flag, img = self.cam_capture.read()
+        while not rospy.is_shutdown():
+            flag, img = self.cam_capture.read()
+            if flag:
+                # self.cam_info.loadCameraInfo()
+                ros_img_msg = cvRos.cv2_to_imgmsg(img, encoding="bgr8")
+                ros_img_msg.header.frame_id = self.frame_id
+                current_cam_info = self.cam_info.getCameraInfo()
+                current_cam_info.header.frame_id = self.frame_id
+
+                publish_time = rospy.Time.now()
+                current_cam_info.header.stamp = publish_time
+                ros_img_msg.header.stamp = publish_time
+
+                self.IMAGE_PUBLISHER.publish(ros_img_msg)
+                self.INFO_PUBLISHER.publish(current_cam_info)
+
+                self.STRING_PUBLISHER.publish('hello world')
+            time.sleep(0.2)
+
+    def cleanRelease(self):
+        print('INITIATING CLEAN SHUTDOWN')
+        if self.cam_capture is not None:
+            if self.cam_capture.isOpened():
+                print('releasing camera')
+                self.cam_capture.release()
+            else:
+                print('no cameras attached to release')
+        return
+
+
+if __name__ == "__main__":
+
+    k = rpiCameraPublisher()
