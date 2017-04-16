@@ -8,6 +8,7 @@ import sys
 import pdb
 import time
 import yaml
+import argparse
 
 import numpy as np
 import cv2
@@ -25,23 +26,31 @@ class rpiCameraPublisher(object):
 
     def __init__(self, cam_name='head_camera', cam_id=3, calib_url='file:///home/nike/.ros/camera_info/picam_global.yaml'):
         print('hello')
-        node_name = rospy.get_param('/camera_frame')
-        cam_id = int(rospy.get_param('/camera_index')[-1])
-        cam_name = node_name
+        # node_name = rospy.get_param('/camera_frame')
+        call_space = rospy.get_namespace()
+        param_dict = rospy.get_param(call_space)
+        node_name='camera_node'
+        node_param = param_dict[node_name]
+        # camera_param = param_dict[node_name]
+
+        cam_id = int(node_param['video_device'][-1]) #camera_param['video_device'][-1]
+        camera_frame_id = node_param['camera_frame_id']
+
         ###########
-        self.STRING_PUBLISHER = rospy.Publisher('/%s/my_string' % node_name, String, queue_size=1)
-        self.IMAGE_PUBLISHER = rospy.Publisher('/%s/image_raw' % node_name, Image, queue_size=1)
-        self.INFO_PUBLISHER = rospy.Publisher('/%s/camera_info' % node_name, CameraInfo, queue_size=1)
+        self.STRING_PUBLISHER = rospy.Publisher('my_string', String, queue_size=1)
+        self.IMAGE_PUBLISHER = rospy.Publisher('image_raw' , Image, queue_size=1)
+        self.INFO_PUBLISHER = rospy.Publisher('camera_info', CameraInfo, queue_size=1)
         ###########
         rospy.init_node('%s' % node_name)
 
         self.cam_name = node_name
-        self.frame_id = node_name
+        self.frame_id = camera_frame_id
         self.cam_id = cam_id
         self.calib_url = calib_url
         self.cam_capture = None
         self.cam_info = cim.CameraInfoManager(cname=self.cam_name, url=self.calib_url)
         self.cam_info.loadCameraInfo()
+        self.param_dict = node_param
         # clean release
         rospy.on_shutdown(self.cleanRelease)
         # publisher
@@ -67,8 +76,8 @@ class rpiCameraPublisher(object):
 
                 self.IMAGE_PUBLISHER.publish(ros_img_msg)
                 self.INFO_PUBLISHER.publish(current_cam_info)
+                self.STRING_PUBLISHER.publish(self.param_dict['video_device'])
 
-                self.STRING_PUBLISHER.publish('hello world')
             time.sleep(0.2)
 
     def cleanRelease(self):

@@ -4,63 +4,64 @@
     <arg name="max_track_error" default="0.02" />
 
     <arg name="camera_frame_id" default="picam_global" />
+    <arg name="camera_node_name" default="camera_node" />
+
     <arg name="cam_image_topic" default="/$(arg camera_frame_id)/image_raw" />
     <arg name="cam_info_topic" default="/$(arg camera_frame_id)/camera_info" />
     <arg name="output_frame" default="$(arg camera_frame_id)" />
 
     <arg name="video_device" default="/dev/video3" />
-    <arg name="calib_url" default="file://${HOME}/.ros/camera_info/picam_global.yaml" />
+    <arg name="calib_url" default="file://${HOME}/.ros/camera_info/$(arg camera_frame_id).yaml" />
     <arg name="framerate" default="5" />
-
-    <param
-        name="camera_frame"
-        value="$(arg camera_frame_id)"/>
-    <param
-        name="camera_index"
-        value="$(arg video_device)" />
 
     <node
         pkg="tf"
         type="static_transform_publisher"
         args="0 0 1 0 -90 0 world $(arg camera_frame_id) 100"
-        name="world2pi" />
+        name="world2$(arg camera_frame_id)" />
 
-    <node
-        pkg="rpi_tracker"
-        type="rpi_usb_cam.py"
-        name="picam_global">
-        <param
-            name="camera_frame_id"
-            value="$(arg camera_frame_id)" />
-        <param
-            name="video_device"
-            value="$(arg video_device)"/>
-        <param
-            name="image_height"
-            value="720" />
-        <param
-            name="image_width"
-            value="1280" />
-        <param
-            name="framerate"
-            value="$(arg framerate)" />
+    <group ns="$(arg camera_frame_id)">
 
-    </node>
+        <node
+            pkg="rpi_tracker"
+            type="rpi_usb_cam.py"
+            name="$(arg camera_node_name)"
+            args="$(arg camera_node_name)">
 
-    <node
-        pkg="ar_track_alvar"
-        type="individualMarkersNoKinect"
-        name="ar_track_alvar"
-        respawn="true"
-        output="screen">
+            <param
+                name="camera_frame_id"
+                value="$(arg camera_frame_id)" />
+            <param
+                name="video_device"
+                value="$(arg video_device)"/>
+            <param
+                name="image_height"
+                value="720" />
+            <param
+                name="image_width"
+                value="1280" />
+            <param
+                name="framerate"
+                value="$(arg framerate)" />
 
-        <param name="marker_size"           type="double" value="$(arg marker_size)" />
-		<param name="max_new_marker_error"  type="double" value="$(arg max_new_marker_error)" />
-		<param name="max_track_error"       type="double" value="$(arg max_track_error)" />
-		<param name="output_frame"          type="string" value="/world" />
+        </node>
 
-        <remap from="camera_image" to="$(arg cam_image_topic)"/>
-        <remap from="camera_info" to="$(arg cam_info_topic)"/>
-    </node>
+        <node
+            pkg="ar_track_alvar"
+            type="individualMarkersNoKinect"
+            name="$(arg output_frame)_tracker"
+            respawn="true"
+            output="screen">
 
+            <param name="marker_size"           type="double" value="$(arg marker_size)" />
+            <param name="max_new_marker_error"  type="double" value="$(arg max_new_marker_error)" />
+            <param name="max_track_error"       type="double" value="$(arg max_track_error)" />
+            <param name="output_frame"          type="string" value="$(arg output_frame)" />
+
+            <remap from="camera_image" to="$(arg cam_image_topic)"/>
+            <remap from="camera_info" to="$(arg cam_info_topic)"/>
+            <remap from="ar_pose_marker" to="$(arg output_frame)_marker"/>
+        </node>
+
+    </group>
 </launch>
