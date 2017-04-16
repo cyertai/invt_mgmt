@@ -5,9 +5,9 @@
         <arg name="video_device" default="/dev/video2" />
     </include>
 
-    <!--<include file="$(find rpi_tracker)/launch/invt_mgmt.launch">-->
-        <!--<arg name="camera_frame_id" default="picam_local" />-->
-        <!--<arg name="video_device" default="/dev/video2" />-->
-    <!--</include>-->
+    <include file="$(find rpi_tracker)/launch/invt_mgmt.launch">
+        <arg name="camera_frame_id" default="picam_global" />
+        <arg name="video_device" default="/dev/video0" />
+    </include>
 
 </launch>

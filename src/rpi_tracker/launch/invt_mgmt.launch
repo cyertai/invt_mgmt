@@ -43,6 +43,9 @@
             <param
                 name="framerate"
                 value="$(arg framerate)" />
+            <param
+                name="calib_url"
+                value="$(arg calib_url)"/>
 
         </node>
 

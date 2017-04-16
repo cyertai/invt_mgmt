@@ -24,18 +24,17 @@ cvRos = CvBridge()
 
 class rpiCameraPublisher(object):
 
-    def __init__(self, cam_name='head_camera', cam_id=3, calib_url='file:///home/nike/.ros/camera_info/picam_global.yaml'):
+    def __init__(self, cam_name='head_camera', cam_id=3)
         print('hello')
         # node_name = rospy.get_param('/camera_frame')
         call_space = rospy.get_namespace()
         param_dict = rospy.get_param(call_space)
         node_name='camera_node'
         node_param = param_dict[node_name]
-        # camera_param = param_dict[node_name]
-
+        ###########
         cam_id = int(node_param['video_device'][-1]) #camera_param['video_device'][-1]
         camera_frame_id = node_param['camera_frame_id']
-
+        calib_url = node_param['calib_url']
         ###########
         self.STRING_PUBLISHER = rospy.Publisher('my_string', String, queue_size=1)
         self.IMAGE_PUBLISHER = rospy.Publisher('image_raw' , Image, queue_size=1)
