@@ -1,14 +1,16 @@
 <launch>
 
+    <arg name="video_device_0" default="/dev/video0" />
+    <arg name="video_device_1" default="/dev/video1" />
 
     <include file="$(find rpi_tracker)/launch/invt_mgmt.launch">
         <arg name="camera_frame_id" default="picam_local" />
-        <arg name="video_device" default="/dev/video0" />
+        <arg name="video_device" default="$(arg video_device_0)" />
     </include>
 
     <include file="$(find rpi_tracker)/launch/invt_mgmt.launch">
         <arg name="camera_frame_id" default="picam_global" />
-        <arg name="video_device" default="/dev/video1" />
+        <arg name="video_device" default="$(arg video_device_1)" />
     </include>
 
 	<node
@@ -32,5 +34,16 @@
         type="static_transform_publisher"
         args="1 1.2 1 0 -90 0 world satellite_3 100"
 		name="world2satellite_3" />
+
+    <node
+        pkg="tf"
+        type="static_transform_publisher"
+        args="0 0 1 0 -90 0 world picam_global 100"
+        name="world2picam_global" />
+    <node
+        pkg="tf"
+        type="static_transform_publisher"
+        args="0 0 1 0 -90 90 world picam_local 100"
+        name="world2picam_local" />
 
 </launch>

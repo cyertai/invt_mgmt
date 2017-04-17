@@ -1,7 +1,7 @@
 <launch>
     <arg name="marker_size" default="2.4" />
-    <arg name="max_new_marker_error" default="0.2" />
-    <arg name="max_track_error" default="0.2" />
+    <arg name="max_new_marker_error" default="0.08" />
+    <arg name="max_track_error" default="0.02" />
 
     <arg name="camera_frame_id" default="picam_global" />
     <arg name="camera_node_name" default="camera_node" />
@@ -11,15 +11,15 @@
     <arg name="output_frame" default="$(arg camera_frame_id)" />
 
     <arg name="video_device" default="/dev/video0" />
-    <arg name="calib_url" default="file:///home/inventory_mgmt/.ros/camera_info/$(arg camera_frame_id).yaml" />
+    <arg name="calib_url" default="file://$(env HOME)/.ros/camera_info/$(arg camera_frame_id).yaml" />
 
     <arg name="framerate" default="5" />
 
-    <node
-        pkg="tf"
-        type="static_transform_publisher"
-        args="0 0 1 0 -90 0 world $(arg camera_frame_id) 100"
-        name="world2$(arg camera_frame_id)" />
+    <!--<node-->
+        <!--pkg="tf"-->
+        <!--type="static_transform_publisher"-->
+        <!--args="0 0 1 0 -90 0 world $(arg camera_frame_id) 100"-->
+        <!--name="world2$(arg camera_frame_id)" />-->
 
     <group ns="$(arg camera_frame_id)">
 
