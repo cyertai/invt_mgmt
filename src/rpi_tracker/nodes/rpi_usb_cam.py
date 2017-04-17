@@ -24,7 +24,7 @@ cvRos = CvBridge()
 
 class rpiCameraPublisher(object):
 
-    def __init__(self, cam_name='head_camera', cam_id=3)
+    def __init__(self, cam_name='head_camera', cam_id=3):
         print('hello')
         # node_name = rospy.get_param('/camera_frame')
         call_space = rospy.get_namespace()
@@ -35,8 +35,8 @@ class rpiCameraPublisher(object):
         cam_id = int(node_param['video_device'][-1]) #camera_param['video_device'][-1]
         camera_frame_id = node_param['camera_frame_id']
         calib_url = node_param['calib_url']
+        frame_rate = node_param['framerate']
         ###########
-        self.STRING_PUBLISHER = rospy.Publisher('my_string', String, queue_size=1)
         self.IMAGE_PUBLISHER = rospy.Publisher('image_raw' , Image, queue_size=1)
         self.INFO_PUBLISHER = rospy.Publisher('camera_info', CameraInfo, queue_size=1)
         ###########
@@ -49,7 +49,8 @@ class rpiCameraPublisher(object):
         self.cam_capture = None
         self.cam_info = cim.CameraInfoManager(cname=self.cam_name, url=self.calib_url)
         self.cam_info.loadCameraInfo()
-        self.param_dict = node_param
+        #self.param_dict = node_param
+        self.framerate = frame_rate
         # clean release
         rospy.on_shutdown(self.cleanRelease)
         # publisher
@@ -75,9 +76,8 @@ class rpiCameraPublisher(object):
 
                 self.IMAGE_PUBLISHER.publish(ros_img_msg)
                 self.INFO_PUBLISHER.publish(current_cam_info)
-                self.STRING_PUBLISHER.publish(self.param_dict['video_device'])
 
-            time.sleep(0.2)
+            time.sleep(1.0/self.framerate)
 
     def cleanRelease(self):
         print('INITIATING CLEAN SHUTDOWN')

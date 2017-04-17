@@ -11,7 +11,7 @@
     <arg name="output_frame" default="$(arg camera_frame_id)" />
 
     <arg name="video_device" default="/dev/video3" />
-    <arg name="calib_url" default="file://${HOME}/.ros/camera_info/$(arg camera_frame_id).yaml" />
+    <arg name="calib_url" default="file:///home/inventory_mgmt/.ros/camera_info/$(arg camera_frame_id).yaml" />
     <arg name="framerate" default="5" />
 
     <node
