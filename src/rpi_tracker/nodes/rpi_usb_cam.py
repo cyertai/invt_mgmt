@@ -24,7 +24,7 @@ cvRos = CvBridge()
 
 class rpiCameraPublisher(object):
 
-    def __init__(self, cam_name='head_camera', cam_id=3):
+    def __init__(self, cam_name='head_camera'):
         print('hello')
         # node_name = rospy.get_param('/camera_frame')
         call_space = rospy.get_namespace()
@@ -47,7 +47,7 @@ class rpiCameraPublisher(object):
         self.cam_id = cam_id
         self.calib_url = calib_url
         self.cam_capture = None
-        self.cam_info = cim.CameraInfoManager(cname=self.cam_name, url=self.calib_url)
+        self.cam_info = cim.CameraInfoManager(cname=self.frame_id, url=self.calib_url)
         self.cam_info.loadCameraInfo()
         #self.param_dict = node_param
         self.framerate = frame_rate

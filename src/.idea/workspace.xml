@@ -23,7 +23,7 @@
     <favorites_list name="src" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.68046874">
+    <splitter split-orientation="horizontal" split-proportion="0.49583334">
       <split-first>
         <splitter split-orientation="horizontal" split-proportion="0.43997073">
           <split-first>
@@ -31,8 +31,8 @@
               <file leaf-file-name="invt_mgmt_multiple.launch" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/rpi_tracker/launch/invt_mgmt_multiple.launch">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="297">
-                      <caret line="9" column="53" lean-forward="false" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
+                    <state relative-caret-position="132">
+                      <caret line="4" column="54" lean-forward="false" selection-start-line="4" selection-start-column="54" selection-end-line="4" selection-end-column="54" />
                       <folding />
                     </state>
                   </provider>
@@ -45,10 +45,10 @@
               <file leaf-file-name="invt_mgmt.launch" pinned="false" current-in-tab="true">
                 <entry file="file://$PROJECT_DIR$/rpi_tracker/launch/invt_mgmt.launch">
                   <provider selected="true" editor-type-id="text-editor">
-                    <state relative-caret-position="1598">
-                      <caret line="47" column="42" lean-forward="false" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
+                    <state relative-caret-position="403">
+                      <caret line="13" column="52" lean-forward="false" selection-start-line="13" selection-start-column="52" selection-end-line="13" selection-end-column="52" />
                       <folding>
-                        <marker date="1492375734912" expanded="true" signature="159:501" ph="..." />
+                        <marker date="1492407689175" expanded="true" signature="159:501" ph="..." />
                       </folding>
                     </state>
                   </provider>
@@ -63,8 +63,8 @@
           <file leaf-file-name="rpi_usb_cam.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/rpi_tracker/nodes/rpi_usb_cam.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="450">
-                  <caret line="26" column="56" lean-forward="false" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
+                <state relative-caret-position="627">
+                  <caret line="49" column="65" lean-forward="false" selection-start-line="49" selection-start-column="65" selection-end-line="49" selection-end-column="65" />
                   <folding>
                     <element signature="e#76#85#0" expanded="true" />
                   </folding>
@@ -93,8 +93,8 @@
       <list>
         <option value="$PROJECT_DIR$/rpi_usb_cam.py" />
         <option value="$PROJECT_DIR$/rpi_cam/nodes/rpi_usb_cam.py" />
-        <option value="$PROJECT_DIR$/rpi_tracker/launch/invt_mgmt_multiple.launch" />
         <option value="$PROJECT_DIR$/rpi_tracker/launch/invt_mgmt.launch" />
+        <option value="$PROJECT_DIR$/rpi_tracker/launch/invt_mgmt_multiple.launch" />
         <option value="$PROJECT_DIR$/rpi_tracker/nodes/rpi_usb_cam.py" />
       </list>
     </option>
@@ -361,7 +361,7 @@
         <state relative-caret-position="1564">
           <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
           <folding>
-            <marker date="1492375734912" expanded="true" signature="159:501" ph="..." />
+            <marker date="1492407689175" expanded="true" signature="159:501" ph="..." />
           </folding>
         </state>
       </provider>
@@ -379,28 +379,28 @@
     <entry file="file://$PROJECT_DIR$/rpi_usb_cam.py" />
     <entry file="file://$PROJECT_DIR$/rpi_usb_cam.py" />
     <entry file="file://$PROJECT_DIR$/rpi_cam/nodes/rpi_usb_cam.py" />
-    <entry file="file://$PROJECT_DIR$/rpi_tracker/launch/invt_mgmt_multiple.launch">
+    <entry file="file://$PROJECT_DIR$/rpi_tracker/launch/invt_mgmt.launch">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="9" column="53" lean-forward="false" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
-          <folding />
+        <state relative-caret-position="403">
+          <caret line="13" column="52" lean-forward="false" selection-start-line="13" selection-start-column="52" selection-end-line="13" selection-end-column="52" />
+          <folding>
+            <marker date="1492407689175" expanded="true" signature="159:501" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rpi_tracker/launch/invt_mgmt.launch">
+    <entry file="file://$PROJECT_DIR$/rpi_tracker/launch/invt_mgmt_multiple.launch">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1598">
-          <caret line="47" column="42" lean-forward="false" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
-          <folding>
-            <marker date="1492375734912" expanded="true" signature="159:501" ph="..." />
-          </folding>
+        <state relative-caret-position="132">
+          <caret line="4" column="54" lean-forward="false" selection-start-line="4" selection-start-column="54" selection-end-line="4" selection-end-column="54" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rpi_tracker/nodes/rpi_usb_cam.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="26" column="56" lean-forward="false" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
+        <state relative-caret-position="627">
+          <caret line="49" column="65" lean-forward="false" selection-start-line="49" selection-start-column="65" selection-end-line="49" selection-end-column="65" />
           <folding>
             <element signature="e#76#85#0" expanded="true" />
           </folding>
